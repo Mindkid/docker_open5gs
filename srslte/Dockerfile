@@ -33,7 +33,7 @@ RUN apt-get update && \
     apt-get -y install cmake libfftw3-dev libmbedtls-dev libboost-program-options-dev libconfig++-dev libsctp-dev git \
     libzmq3-dev libboost-system-dev libboost-test-dev libboost-thread-dev libqwt-qt5-dev qtbase5-dev \
     software-properties-common g++ make pkg-config libpython2-dev python-numpy swig libi2c-dev \
-    libboost-program-options-dev libconfig++-dev net-tools iputils-ping
+    libboost-program-options-dev libconfig++-dev net-tools iputils-ping autoconf libtool bison flex
 
 # Install SoapySDR and Lime Suite
 RUN add-apt-repository -y ppa:myriadrf/drivers && \
@@ -47,6 +47,12 @@ RUN add-apt-repository ppa:ettusresearch/uhd && \
     apt update && apt -y install libuhd-dev libuhd4.3.0 uhd-host && \
     uhd_images_downloader
 
+RUN git clone https://github.com/OPENAIRINTERFACE/asn1c.git && \
+    cd asn1c/ && \
+    test -f configure || autoreconf -iv &&\
+    ./configure &&\
+    make && make install
+
 # Get srsGUI, compile and install
 RUN git clone https://github.com/srsran/srsGUI && \
     cd srsGUI/ && \
@@ -56,14 +62,13 @@ RUN git clone https://github.com/srsran/srsGUI && \
 #RUN apt-get update && apt-get install -y gdb libdw-dev
 
 # Get srsLTE, compile and install
-RUN git clone https://github.com/srsran/srsRAN.git && \
-    cd srsRAN && \
-    git checkout tags/release_22_04_1 && \
+RUN git clone https://github.com/Mindkid/srsRAN-e2.git && \
+    cd srsRAN-e2 && \
     mkdir build && cd build && \
-    cmake ../ && make -j`nproc` && make install && \
+    cmake ../ && make && make install && \
     ldconfig
 
-RUN cd srsRAN/build && srsran_install_configs.sh service
+RUN cd srsRAN-e2/build && srsran_install_configs.sh service
 
 ENV UHD_IMAGES_DIR=/usr/share/uhd/images/
 
