@@ -81,7 +81,7 @@ def start(tun_ifname,
 	execute_bash_cmd('ip tuntap add name ' + tun_ifname + ' mode tun')
 	execute_bash_cmd('ip addr add ' + first_ipv4_addr + '/' + str(ipv4_netmask_prefix) + ' dev ' + tun_ifname)
 	execute_bash_cmd('ip addr add ' + first_ipv6_addr + '/' + str(ipv6_netmask_prefix) + ' dev ' + tun_ifname)
-	execute_bash_cmd('ip link set ' + tun_ifname + ' mtu 1450')
+	execute_bash_cmd('ip link set ' + tun_ifname + ' mtu 1500')
 	execute_bash_cmd('ip link set ' + tun_ifname + ' up')
 	if nat_rule == 'yes':
 		execute_bash_cmd('if ! iptables-save | grep -- \"-A POSTROUTING -s ' + ipv4_range.with_prefixlen + ' ! -o ' + tun_ifname + ' -j MASQUERADE\" ; then ' +

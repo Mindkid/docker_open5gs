@@ -47,12 +47,6 @@ RUN add-apt-repository ppa:ettusresearch/uhd && \
     apt update && apt -y install libuhd-dev libuhd4.3.0 uhd-host && \
     uhd_images_downloader
 
-RUN git clone https://github.com/OPENAIRINTERFACE/asn1c.git && \
-    cd asn1c/ && \
-    test -f configure || autoreconf -iv &&\
-    ./configure &&\
-    make && make install
-
 # Get srsGUI, compile and install
 RUN git clone https://github.com/srsran/srsGUI && \
     cd srsGUI/ && \
@@ -64,9 +58,8 @@ RUN git clone https://github.com/srsran/srsGUI && \
 # Get srsLTE, compile and install
 RUN git clone https://github.com/Mindkid/srsRAN-e2.git && \
     cd srsRAN-e2 && \
-    mkdir build && cd build && \
-    cmake ../ && make && make install && \
-    ldconfig
+    chmod +x ./build_srsran_e2.sh && \
+    ./build_srsran_e2.sh
 
 RUN cd srsRAN-e2/build && srsran_install_configs.sh service
 
