@@ -48,7 +48,7 @@ RUN add-apt-repository ppa:ettusresearch/uhd && \
     uhd_images_downloader
 
 # Get srsGUI, compile and install
-RUN git clone https://github.com/srsran/srsGUI && \
+RUN git clone https://github.com/srsran/srsGUI.git && \
     cd srsGUI/ && \
     mkdir build && cd build && \
     cmake ../ && make -j`nproc` && make install && ldconfig

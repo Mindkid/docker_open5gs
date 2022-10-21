@@ -47,12 +47,12 @@ elif [[ "$COMPONENT_NAME" =~ ^(enb$) ]]; then
 	sed -i 's|MME_IP|'$MME_IP'|g' /etc/srsran/enb.conf
 elif [[ "$COMPONENT_NAME" =~ ^(enb_zmq$) ]]; then
 	echo "Configuring component: '$COMPONENT_NAME'"
-	cp /mnt/srslte/rr.conf /etc/srsran
+	cp /mnt/srslte/rr_gnb.conf /etc/srsran
 	cp /mnt/srslte/enb_zmq.conf /etc/srsran/enb.conf
 	sed -i 's|MME_IP|'$MME_IP'|g' /etc/srsran/enb.conf
 elif [[ "$COMPONENT_NAME" =~ ^(gnb_zmq$) ]]; then
 	echo "Configuring component: '$COMPONENT_NAME'"
-	cp /mnt/srslte/rr_gnb.conf /etc/srsran/rr.conf
+	cp /mnt/srslte/rr.conf /etc/srsran/rr.conf
 	cp /mnt/srslte/enb_zmq.conf /etc/srsran/enb.conf
 	sed -i 's|MME_IP|'$AMF_IP'|g' /etc/srsran/enb.conf
 elif [[ "$COMPONENT_NAME" =~ ^(ue_zmq$) ]]; then
